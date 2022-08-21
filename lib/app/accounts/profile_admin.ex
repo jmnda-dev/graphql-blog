@@ -4,7 +4,7 @@ defmodule App.Accounts.ProfileAdmin do
 
   def form_fields(_) do
     [
-      avatar: %{create: :readonly, update: :readonly},
+      avatar: nil,
       avatar_upload: %{type: :file},
       about: nil,
       description: nil,
@@ -26,7 +26,7 @@ defmodule App.Accounts.ProfileAdmin do
     img_path =
       case handle_upload(conn, "profile", "avatar_upload") do
         nil ->
-          changeset.data.avatar
+          conn.params["profile"]["avatar"]
 
         img_path ->
           img_path
@@ -46,7 +46,7 @@ defmodule App.Accounts.ProfileAdmin do
     img_path =
       case handle_upload(conn, "profile", "avatar_upload") do
         nil ->
-          changeset.data.avatar
+          conn.params["profile"]["avatar"]
 
         img_path ->
           img_path
