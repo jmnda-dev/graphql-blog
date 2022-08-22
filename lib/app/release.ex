@@ -6,6 +6,7 @@ defmodule App.Release do
   @app :app
 
   def migrate do
+    Application.ensure_all_started(@app)
     load_app()
 
     for repo <- repos() do
@@ -14,6 +15,7 @@ defmodule App.Release do
   end
 
   def rollback(repo, version) do
+    Application.ensure_all_started(@app)
     load_app()
     {:ok, _, _} = Ecto.Migrator.with_repo(repo, &Ecto.Migrator.run(&1, :down, to: version))
   end
