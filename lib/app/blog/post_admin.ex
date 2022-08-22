@@ -49,11 +49,14 @@ defmodule App.Blog.PostAdmin do
   end
 
   def before_update(conn, changeset) do
+    current_user = conn.assigns[:current_user]
+
     img_path = save_upload(conn, changeset, "post", "featured_image_upload")
 
     {
       :ok,
       changeset
+      |> Ecto.Changeset.put_assoc(:author, current_user)
       |> Ecto.Changeset.put_change(:featured_image, img_path)
     }
   end
@@ -76,10 +79,10 @@ defmodule App.Blog.PostAdmin do
     Enum.reduce(tags, [], fn tag, acc -> Keyword.put(acc, String.to_atom(tag.name), tag.id) end)
   end
 
-  defp save_upload(conn, changeset, schema_name, field) do
+  defp save_upload(conn, %{changes: changes, data: data} = _changeset, schema_name, field) do
     case Upload.handle_upload(conn, schema_name, field) do
       nil ->
-        changeset.data.featured_image
+        changes[:featured_image] || data.featured_image
 
       img_path ->
         img_path
