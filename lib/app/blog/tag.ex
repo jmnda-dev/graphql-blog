@@ -14,5 +14,15 @@ defmodule App.Blog.Tag do
     tag
     |> cast(attrs, [:name])
     |> validate_required([:name])
+    |> lowercase_tag(attrs["name"])
+
   end
+
+  defp lowercase_tag(_changeset, nil), do: nil
+
+  defp lowercase_tag(changeset, tag_name) do
+    changeset
+    |> put_change(:name, String.downcase(tag_name))
+  end
+
 end
