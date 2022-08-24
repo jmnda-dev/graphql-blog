@@ -82,10 +82,13 @@ defmodule App.Blog.PostAdmin do
   defp save_upload(conn, %{changes: changes, data: data} = _changeset, schema_name, field) do
     case Upload.handle_upload(conn, schema_name, field) do
       nil ->
-        changes[:featured_image] || data.featured_image
+        changes[:featured_image] ||
+          data.featured_image
+          |> Upload.put_image_url()
 
       img_path ->
         img_path
+        |> Upload.put_image_url()
     end
   end
 end

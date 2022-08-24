@@ -1,6 +1,15 @@
 defmodule AppWeb.Upload do
   alias AppWeb.Router.Helpers, as: Routes
 
+  def put_image_url(static_path) do
+    if is_nil(static_path) do
+      nil
+    else
+      url = AppWeb.Endpoint.url()
+      url <> static_path
+    end
+  end
+
   def handle_upload(%{params: params} = conn, schema_name, field) do
     upload =
       Map.get(params, schema_name)
