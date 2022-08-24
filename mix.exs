@@ -54,7 +54,8 @@ defmodule App.MixProject do
       {:dataloader, "~> 1.0"},
       {:kaffy,
        git: "https://github.com/jmnda-dev/kaffy/", ref: "153d9728bc5ddce83960f4f64fb544f352f9c349"},
-      {:slugy, "~> 4.1"}
+      {:slugy, "~> 4.1"},
+      {:ex_prompt, "~> 0.2.0"}
     ]
   end
 
