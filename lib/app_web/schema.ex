@@ -2,7 +2,6 @@ defmodule AppWeb.Schema do
   use Absinthe.Schema
   import_types(Absinthe.Type.Custom)
   import_types(AppWeb.Schema.BlogTypes)
-  import_types(AppWeb.Schema.TagTypes)
   import_types(AppWeb.Schema.AccountTypes)
 
   alias AppWeb.Resolvers
@@ -27,8 +26,8 @@ defmodule AppWeb.Schema do
 
     @desc "Get a tag by slug"
     field :tag, :tag do
-      arg(:name, non_null(:string))
-      resolve(&Resolvers.Blog.get_tag_by_name/3)
+      arg(:slug, non_null(:string))
+      resolve(&Resolvers.Blog.get_tag_by_slug/3)
     end
 
     @desc "Get the Profile for the Blog owner"

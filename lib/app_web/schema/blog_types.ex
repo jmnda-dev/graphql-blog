@@ -16,4 +16,11 @@ defmodule AppWeb.Schema.BlogTypes do
     field :author, :user, resolve: dataloader(Accounts)
     field :tags, list_of(:tag), resolve: dataloader(Blog)
   end
+
+  object :tag do
+    field :id, :id
+    field :slug, :string
+    field :name, :string
+    field :posts, list_of(:post), resolve: dataloader(Blog)
+  end
 end

@@ -148,7 +148,7 @@ defmodule App.Blog do
       ** (Ecto.NoResultsError)
 
   """
-  def get_tag(name), do: Repo.get_by(Tag, name: name)
+  def get_tag(slug), do: Repo.get_by(Tag, slug: slug)
 
   @doc """
   Creates a tag.

@@ -3,6 +3,7 @@ defmodule App.Blog.Tag do
   import Ecto.Changeset
 
   schema "tags" do
+    field :slug, :string
     field :name, :string
     many_to_many :posts, App.Blog.Post, join_through: "posts_tags"
 

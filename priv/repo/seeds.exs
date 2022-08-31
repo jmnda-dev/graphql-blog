@@ -14,17 +14,14 @@ alias App.Accounts
 alias App.Blog
 alias App.Blog.{Post, Comment, Tag}
 
-{:ok, author} = Accounts.register_user(
-  %{
-    "first_name"=> "John",
-    "last_name"=> "Doe",
-    "email"=> "johndoe@mail.com",
-    "password"=> "1234567890000",
-    "roles"=> ["admin", "owner"]
-  }
-)
-
-
+{:ok, author} =
+  Accounts.register_user(%{
+    "first_name" => "John",
+    "last_name" => "Doe",
+    "email" => "johndoe@mail.com",
+    "password" => "1234567890000",
+    "roles" => ["admin", "owner"]
+  })
 
 posts = [
   %{
@@ -1030,12 +1027,16 @@ posts = [
 ]
 
 tags = [
-  %Tag{name: "programing"},
-  %Tag{name: "phoenix"},
-  %Tag{name: "ecto"}
+  %{"name" => "programing"},
+  %{"name" => "phoenix"},
+  %{"name" => "ecto"}
 ]
 
-created_tags = Enum.map(tags, &Repo.insert!/1)
+created_tags =
+  Enum.map(tags, fn tag ->
+    changeset = Blog.change_tag(%Tag{}, tag)
+    Repo.insert!(changeset)
+  end)
 
 Enum.each(posts, fn post ->
   changeset = Blog.change_post(%Post{}, post)
